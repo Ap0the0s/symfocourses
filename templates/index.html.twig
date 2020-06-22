@@ -23,15 +23,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for currency in currencies %}
-                        <tr>
-                            <td>{{ currency.numcode }}</td>
-                            <td>{{ currency.charcode }}</td>
-                            <td>{{ currency.nominal }}</td>
-                            <td>{{ currency.name }}</td>
-                            <td>{{ currency.value }}</td>
-                        </tr>
-                    {% endfor %}
+
+                    {{ block("table", "table.html.twig") }}
+
                     </tr>
 
                     </tbody>
@@ -51,6 +45,5 @@
         </div>
     </div>
     </div>
-
 
 {% endblock %}

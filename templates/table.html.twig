@@ -1,0 +1,13 @@
+{% block table %}
+
+    {% for currency in currencies %}
+        <tr>
+            <td>{{ currency.numcode }}</td>
+            <td>{{ currency.charcode }}</td>
+            <td>{{ currency.nominal }}</td>
+            <td>{{ currency.name }}</td>
+            <td>{{ currency.value }}</td>
+        </tr>
+    {% endfor %}
+
+{% endblock %}

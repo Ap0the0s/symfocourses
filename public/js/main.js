@@ -41,9 +41,9 @@ function getSlice(page,per_page) {
         },
         'success': function (answer) {
             togglePreloader();
-            if(answer.status == "success") {
-                renderRows(answer.data.currencies);
-            } else if(answer.status == "error"){
+            if(answer.length) {
+                $('table.table tbody').html(answer);
+            } else {
                 alert('Что-то пошло не так');
             }
         },
@@ -53,19 +53,4 @@ function getSlice(page,per_page) {
         }
 
     });
-}
-
-function renderRows(data) {
-    var html = '';
-    for (var itm in data) {
-        html += "<tr>";
-        html += "<td>" + data[itm]['numcode'] + "</td>";
-        html += "<td>" + data[itm]['charcode'] + "</td>";
-        html += "<td>" + data[itm]['nominal'] + "</td>";
-        html += "<td>" + data[itm]['name'] + "</td>";
-        html += "<td>" + data[itm]['value'] + "</td>";
-        html += "</tr>";
-    }
-
-    $('table.table tbody').html(html);
 }

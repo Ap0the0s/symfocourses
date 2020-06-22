@@ -43,15 +43,19 @@ class IndexController extends AbstractController
      */
     public function page(Request $request) {
 
+        $table = "";
         $page = $request->request->get('page');
         $per_page = $request->request->get('per_page');
 
-        $data['data'] = $this->currencyService->getCurrenciesSlice($page, $per_page);
-        $data['status'] = !empty($data['data'] && is_array($data['data'])) ? 'success' : 'error';
+        $data = $this->currencyService->getCurrenciesSlice($page, $per_page);
 
-        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
-        return new JsonResponse(
-            $serializer->serialize($data, 'json'), Response::HTTP_OK, [], true
-        );
+        if(isset($data['currencies']))
+            $table = $this->renderView('table.html.twig',
+                [
+                    'currencies' => $data['currencies']
+                ]
+            );
+
+        return new Response($table);
     }
 }

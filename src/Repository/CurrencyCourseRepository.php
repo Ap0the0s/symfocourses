@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Currency;
 use App\Entity\CurrencyCourse;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -29,25 +30,31 @@ class CurrencyCourseRepository extends ServiceEntityRepository
         $offset = ($page - 1) > 0 ? ($page - 1) * $per_page : 0;
         $date = date("Y-m-d", strtotime($date));
 
-        $connection = $this->getEntityManager()->getConnection();
+        $qb = $this->createQueryBuilder('cc')
+            ->select('c.numcode', 'c.charcode', 'c.name', 'cc.nominal', 'cc.value' )
+            ->leftJoin(Currency::class, 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.c_id = cc.c_id')
+            ->where('cc.date = :date')
+            ->setParameters([
+                'date' => $date
+            ])
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
 
-        $stmt = $connection->prepare("SELECT SQL_CALC_FOUND_ROWS c.*, cc.nominal, cc.value
-                  FROM `currency_course` cc, `currency` c
-                  WHERE cc.`c_id` = c.`id` AND `date` = :date LIMIT :offset, :limit");
-        $stmt->bindValue('date', $date, PDO::PARAM_STR);
-        $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
-        $stmt->bindValue('limit', $limit,PDO::PARAM_INT);
-        $stmt->execute();
-        if($stmt->rowCount()) {
-            while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) != false) {
-                $data['currencies'][] = $row;
-            }
-        }
+        $data['currencies'] = $qb->getQuery()
+//            ->getSQL()
+            ->getResult();
 
-        $stmt = $connection->prepare("SELECT FOUND_ROWS() as `count`");
+        $qb = $this->createQueryBuilder('cc')
+            ->select('COUNT(cc.id)')
+            ->where('cc.date = :date')
+            ->setParameters([
+                'date' => $date
+            ]);
 
-        if($stmt->execute()) {
-            $data['currencies_count'] = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        $data['currencies_count'] = $qb->getQuery()
+            ->getSingleScalarResult();
+
+        if($data['currencies_count'] > 0) {
             $data['pages_count'] = ceil($data['currencies_count']/$per_page);
             $data['per_page'] = $per_page;
             $data['page'] = $page;

@@ -15,78 +15,105 @@ class CurrencyCourse
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $c_id;
+    protected $c_id;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nominal;
+    protected $nominal;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $value;
+    protected $value;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $date;
+    protected $date;
 
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getCId(): ?string
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCId()
     {
         return $this->c_id;
     }
 
-    public function setCId(?string $c_id): self
+    /**
+     * @param mixed $c_id
+     */
+    public function setCId($c_id): void
     {
         $this->c_id = $c_id;
-
-        return $this;
     }
 
-    public function getNominal(): ?int
+    /**
+     * @return mixed
+     */
+    public function getNominal()
     {
         return $this->nominal;
     }
 
-    public function setNominal(?int $nominal): self
+    /**
+     * @param mixed $nominal
+     */
+    public function setNominal($nominal): void
     {
         $this->nominal = $nominal;
-
-        return $this;
     }
 
-    public function getValue(): ?string
+    /**
+     * @return mixed
+     */
+    public function getValue()
     {
         return $this->value;
     }
 
-    public function setValue(?string $value): self
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value): void
     {
         $this->value = $value;
-
-        return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getDate()
     {
         return $this->date;
     }
 
-    public function setDate(?\DateTimeInterface $date): self
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date): void
     {
         $this->date = $date;
-
-        return $this;
     }
 }

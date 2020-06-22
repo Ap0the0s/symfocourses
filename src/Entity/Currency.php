@@ -15,61 +15,106 @@ class Currency
      * @ORM\GeneratedValue()
      * @ORM\Column(type="string", length=50)
      */
-    private $id;
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $c_id;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $numcode;
+    protected $numcode;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $charcode;
+    protected $charcode;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $name;
+    protected $name;
 
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getNumcode(): ?string
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCId()
+    {
+        return $this->c_id;
+    }
+
+    /**
+     * @param mixed $c_id
+     */
+    public function setCId($c_id): void
+    {
+        $this->c_id = $c_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNumcode()
     {
         return $this->numcode;
     }
 
-    public function setNumcode(string $numcode): self
+    /**
+     * @param mixed $numcode
+     */
+    public function setNumcode($numcode): void
     {
         $this->numcode = $numcode;
-
-        return $this;
     }
 
-    public function getCharcode(): ?string
+    /**
+     * @return mixed
+     */
+    public function getCharcode()
     {
         return $this->charcode;
     }
 
-    public function setCharcode(string $charcode): self
+    /**
+     * @param mixed $charcode
+     */
+    public function setCharcode($charcode): void
     {
         $this->charcode = $charcode;
-
-        return $this;
     }
 
-    public function getName(): ?string
+    /**
+     * @return mixed
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
     {
         $this->name = $name;
-
-        return $this;
     }
+
 }

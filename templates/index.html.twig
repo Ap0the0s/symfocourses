@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h2>Котировки валют на {{ "now"|date("d.m.Y") }}</h2>
+            </div>
+        </div>
+        <div class="row currency-container">
+        <div class="col-12">
+
+            {% if currencies %}
+                <table class="table" style="table-layout: fixed">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Цифр. код</th>
+                            <th scope="col">Букв. код</th>
+                            <th scope="col">Единиц</th>
+                            <th scope="col">Валюта</th>
+                            <th scope="col">Курс</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for currency in currencies %}
+                        <tr>
+                            <td>{{ currency.numcode }}</td>
+                            <td>{{ currency.charcode }}</td>
+                            <td>{{ currency.nominal }}</td>
+                            <td>{{ currency.name }}</td>
+                            <td>{{ currency.value }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tr>
+
+                    </tbody>
+                </table>
+                <button type="button" class="nav_btn prev btn btn-primary" {{ page == 1 ? 'disabled' : '' }}>Назад</button>
+                {% if pages_count > 1 %}
+                    <button type="button" class="nav_btn next btn btn-primary" {{ page == pages_count ? attributes.addClass('disabled') : '' }}>Вперед</button>
+                {% endif %}
+                <span>Страница <span class="current_p">{{ page }}</span> из <span class="count_p">{{ pages_count }}</span></span>
+                <input type="hidden" class="per_page" value="{{ per_page }}">
+            {% else %}
+                <div class="col-12">
+                    Не удалось получить курсы валют
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+    </div>
+
+
+{% endblock %}

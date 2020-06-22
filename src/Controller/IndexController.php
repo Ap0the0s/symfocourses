@@ -21,19 +21,20 @@ class IndexController extends AbstractController
 
     /**
      * @Route("/", name="main", methods={"GET"})
+     * @param Request $request
+     * @return Response
      */
-    public function index() {
-        $currencies = $this->currencyService->getCurrenciesSlice();
+    public function index(Request $request) {
 
-        return $this->render('index.html.twig',
-            [
-                'currencies' => $currencies['currencies'],
-                'currencies_count'=> $currencies['currencies_count'],
-                'pages_count'=> $currencies['pages_count'],
-                'per_page'=> $currencies['per_page'],
-                'page' => $currencies['page']
-            ]
-        );
+        $data = $this->currencyService->getCurrenciesSlice();
+
+        $page = $request->query->get('page') > 0 ?  $request->query->get('page') : 1;
+
+        $pagination = $this->currencyService->paginator->paginate($data['currencies'], $page, 5);
+
+        return $this->render('index.html.twig', [
+            'pagination' => $pagination
+        ]);
     }
 
     /**

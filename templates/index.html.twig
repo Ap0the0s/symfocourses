@@ -11,7 +11,7 @@
         <div class="row currency-container">
         <div class="col-12">
 
-            {% if currencies %}
+            {% if pagination %}
                 <table class="table" style="table-layout: fixed">
                     <thead class="thead-dark">
                         <tr>
@@ -30,12 +30,11 @@
 
                     </tbody>
                 </table>
-                <button type="button" class="nav_btn prev btn btn-primary" {{ page == 1 ? 'disabled' : '' }}>Назад</button>
-                {% if pages_count > 1 %}
-                    <button type="button" class="nav_btn next btn btn-primary" {{ page == pages_count ? attributes.addClass('disabled') : '' }}>Вперед</button>
-                {% endif %}
-                <span>Страница <span class="current_p">{{ page }}</span> из <span class="count_p">{{ pages_count }}</span></span>
-                <input type="hidden" class="per_page" value="{{ per_page }}">
+
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+
             {% else %}
                 <div class="col-12">
                     Не удалось получить курсы валют

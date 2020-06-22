@@ -8,16 +8,19 @@ use App\Entity\ApiResponse;
 use App\Entity\Currency;
 use App\Entity\CurrencyCourse;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 class CurrencyService
 {
 
     private $api_url = 'http://www.cbr.ru/scripts/XML_daily.asp';
     private $em;
+    public $paginator;
     public $date;
 
-    public function __construct(EntityManagerInterface $em){
+    public function __construct(EntityManagerInterface $em, PaginatorInterface $paginator){
         $this->em = $em;
+        $this->paginator = $paginator;
         $this->date = self::getDate();
     }
 

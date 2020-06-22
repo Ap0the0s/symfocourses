@@ -36,9 +36,9 @@ class CurrencyCourseRepository extends ServiceEntityRepository
             ->where('cc.date = :date')
             ->setParameters([
                 'date' => $date
-            ])
-            ->setMaxResults($limit)
-            ->setFirstResult($offset);
+            ]);
+//            ->setMaxResults($limit)
+//            ->setFirstResult($offset);
 
         $data['currencies'] = $qb->getQuery()
 //            ->getSQL()
